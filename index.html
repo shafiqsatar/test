@@ -20,20 +20,33 @@
     .muted{color:#b8c4e6}
     footer{max-width:980px;margin:auto;padding:20px;color:#91a2d6}
     ul{margin:10px 0 0 18px}
+    summary { cursor: pointer; padding: 10px; background: #1a2333; border-radius: 8px; width: 100%; box-sizing: border-box; position: relative; z-index: 10; }
+    summary:hover { box-shadow: 0 0 30px rgba(155, 183, 255, 0.5); transition: box-shadow 0.3s; }
+    details { position: relative; }
+    details[open] { animation: slideDown 0.3s ease-out; }
+    @keyframes slideDown {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>TEST</h1>
-    <h2>BIM Modeler</h2>
-    <div class="muted">
-      Malaysia
-    </div>
-    <div class="muted">
-       • Email: <a href="mailto:YOUR_EMAIL_HERE">test@outlook.com</a> 
-    </div>
-    <div class="muted">
-       • LinkedIn: <a href="#">YOUR_LINK_HERE</a>
+    <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+      <div>
+        <h1>TEST</h1>
+        <h2>BIM Modeler</h2>
+        <div class="muted">
+          Malaysia
+        </div>
+        <div class="muted">
+           • Email: <a href="mailto:YOUR_EMAIL_HERE">test@outlook.com</a> 
+        </div>
+        <div class="muted">
+           • LinkedIn: <a href="#">YOUR_LINK_HERE</a>
+        </div>
+      </div>
+      <img src="assets/cat_passport.jpg" alt="Profile" style="width: 200px; height: auto; border-radius: 8px;">
     </div>
   </header>
 
@@ -67,12 +80,17 @@
     </section>
 
     <section class="card col12">
-      <h2>Example of Autocad Lisp</h2>
-      <p>White cat squished</p>
-      <p>• description of first example. The cat is being squished by a white box.</p>
-      <img src="assets/cat.gif" alt="Cat GIF" style="height:200px; width:auto;">
-      <p>Number 2</p>
-      <img src="assets/cat2.gif" alt="Cat2 GIF" style="height:200px; width:auto;">
+      <details>
+        <summary>Example of Autocad Lisp</summary>
+        <p>White cat squished</p>
+        <p>• description of first example. The cat is being squished by a white box.</p>
+        <img src="assets/cat.gif" alt="Cat GIF" style="height:200px; width:auto;">
+        <p>Number 2</p>
+        <img src="assets/cat2.gif" alt="Cat2 GIF" style="height:200px; width:auto;">
+        <p>Number 3</p>
+        <p>• the cat is looking around for about a minute.</p>
+        <video src="assets/gray_cat.mp4" controls loop style="height:200px; width:auto;"></video>
+      </details>
     </section>
 
     <section class="card col12">
@@ -100,11 +118,56 @@
   </main>
 
   <footer>
-    © <span id="y"></span> Shafiq • Built with GitHub Pages
+    © <span id="y"></span> TEST • Built with GitHub Pages
   </footer>
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
+    
+    // Smooth dropdown animation
+    const details = document.querySelectorAll('details');
+    details.forEach(detail => {
+      detail.addEventListener('click', function(e) {
+        if (e.target.tagName === 'SUMMARY') {
+          e.preventDefault();
+          
+          if (this.open) {
+            // Closing animation
+            this.style.transition = 'all 0.3s ease-in';
+            this.style.maxHeight = this.scrollHeight + 'px';
+            this.style.opacity = '1';
+            
+            this.offsetHeight;
+            this.style.maxHeight = '0';
+            this.style.opacity = '0';
+            
+            setTimeout(() => {
+              this.removeAttribute('open');
+              this.style.transition = '';
+              this.style.maxHeight = '';
+              this.style.opacity = '';
+            }, 300);
+          } else {
+            // Opening animation
+            this.setAttribute('open', '');
+            this.style.transition = 'all 0.3s ease-out';
+            this.style.maxHeight = '0';
+            this.style.opacity = '0';
+            
+            this.offsetHeight;
+            this.style.maxHeight = this.scrollHeight + 'px';
+            this.style.opacity = '1';
+            
+            setTimeout(() => {
+              this.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              this.style.transition = '';
+              this.style.maxHeight = '';
+              this.style.opacity = '';
+            }, 150);
+          }
+        }
+      });
+    });
   </script>
 </body>
 </html>
