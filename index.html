@@ -33,7 +33,13 @@
     .fullscreen-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); }
     .fullscreen-modal.active { display: flex; align-items: center; justify-content: center; }
     .fullscreen-modal img, .fullscreen-modal video { max-width: 90%; max-height: 90%; }
+    #fullscreenImg { transform-origin: center center; transition: transform 0.12s ease; }
     .fullscreen-close { position: absolute; top: 20px; right: 30px; color: #f1f1f1; font-size: 28px; font-weight: bold; cursor: pointer; }
+
+    /* Zoom controls shown only for images (gifs/jpg/png/etc.) inside the modal */
+    .zoom-controls { position: absolute; right: 30px; bottom: 30px; display: none; gap: 10px; z-index: 1001; }
+    .zoom-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #ffffff; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 18px; }
+    .zoom-btn:hover { background: rgba(255,255,255,0.12); }
   </style>
 </head>
 <body>
@@ -52,7 +58,7 @@
            • LinkedIn: <a href="#">YOUR_LINK_HERE</a>
         </div>
       </div>
-      <img src="assets/cat_passport.jpg" alt="Profile" style="width: 200px; height: auto; border-radius: 8px;">
+      <img src="assets/home/cat_passport.jpg" alt="Profile" style="width: 200px; height: auto; border-radius: 8px;">
     </div>
   </header>
 
@@ -86,18 +92,29 @@
     </section>
 
     <section class="card col12">
+      <h2>Examples</h2>
       <details>
-        <summary>Example of Autocad Lisp</summary>
+        <summary>Revit families (parametric, shared parameters)</summary>
+        <p class="muted">Example notes: Family creation, parameter setup, and usage examples.</p>
+      </details>
+
+      <details>
+        <summary>Dynamo automation</summary>
+        <p class="muted">Example notes: Dynamo scripts, screenshots or GIFs showing automation workflows.</p>
+      </details>
+
+      <details>
+        <summary>Autocad Lisp scripting</summary>
         <p>White cat squished</p>
         <p>• description of first example. The cat is being squished by a white box.</p>
-        <img src="assets/cat.gif" alt="Cat GIF" class="fullscreen-img" style="height:200px; width:auto;">
+        <img src="assets/home/cat.gif" alt="Cat GIF" class="fullscreen-img" style="height:200px; width:auto;">
         <p>Number 2</p>
-        <img src="assets/cat2.gif" alt="Cat2 GIF" class="fullscreen-img" style="height:200px; width:auto;">
+        <img src="assets/home/cat2.gif" alt="Cat2 GIF" class="fullscreen-img" style="height:200px; width:auto;">
         <p>Number 3</p>
         <p>• the cat is looking around for about a minute.</p>
-        <video src="assets/gray_cat.mp4" autoplay controls controlsList="nofullscreen" playsinline loop style="height:200px; width:auto;"></video>
+        <video src="assets/home/gray_cat.mp4" autoplay controls controlsList="nofullscreen" playsinline loop style="height:200px; width:auto;"></video>
         <p>Number 4</p>
-        <img src="assets/small_cat.jpg" alt="Small Cat" class="fullscreen-img" style="height:200px; width:auto;">
+        <img src="assets/home/small_cat.jpg" alt="Small Cat" class="fullscreen-img" style="height:200px; width:auto;">
       </details>
     </section>
 
@@ -148,6 +165,10 @@
     <span class="fullscreen-close">&times;</span>
     <img id="fullscreenImg" style="display:none;">
     <video id="fullscreenVideo" controls style="display:none;"></video>
+    <div class="zoom-controls" id="zoomControls" aria-hidden="true">
+      <button class="zoom-btn" id="zoomOut" title="Zoom out">−</button>
+      <button class="zoom-btn" id="zoomIn" title="Zoom in">+</button>
+    </div>
   </div>
 
   <script>
@@ -158,32 +179,70 @@
     const fullscreenImg = document.getElementById('fullscreenImg');
     const fullscreenVideo = document.getElementById('fullscreenVideo');
     const closeBtn = document.querySelector('.fullscreen-close');
+    const zoomControls = document.getElementById('zoomControls');
+    const zoomInBtn = document.getElementById('zoomIn');
+    const zoomOutBtn = document.getElementById('zoomOut');
+    let zoomScale = 1;
+    const ZOOM_MIN = 1;
+    const ZOOM_MAX = 3;
+    const ZOOM_STEP = 1;
     
     const fullscreenItems = document.querySelectorAll('.fullscreen-img');
     fullscreenItems.forEach(item => {
       item.addEventListener('click', function() {
         if (this.tagName === 'IMG') {
+          // Show image and enable zoom controls
           fullscreenImg.src = this.src;
           fullscreenImg.style.display = 'block';
           fullscreenVideo.style.display = 'none';
+          // reset zoom and show controls
+          zoomScale = 1;
+          fullscreenImg.style.transform = `scale(${zoomScale})`;
+          zoomControls.style.display = 'flex';
         } else if (this.tagName === 'VIDEO') {
+          // Show video and hide zoom controls
           fullscreenVideo.src = this.src;
           fullscreenVideo.style.display = 'block';
           fullscreenImg.style.display = 'none';
+          zoomControls.style.display = 'none';
         }
         fullscreenModal.classList.add('active');
       });
+    });
+
+    // Zoom handlers (images only)
+    function applyZoom() {
+      fullscreenImg.style.transform = `scale(${zoomScale})`;
+    }
+
+    zoomInBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      zoomScale = Math.min(ZOOM_MAX, +(zoomScale + ZOOM_STEP).toFixed(2));
+      applyZoom();
+    });
+
+    zoomOutBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      zoomScale = Math.max(ZOOM_MIN, +(zoomScale - ZOOM_STEP).toFixed(2));
+      applyZoom();
     });
     
     closeBtn.addEventListener('click', function() {
       fullscreenModal.classList.remove('active');
       fullscreenVideo.pause();
+      // reset zoom
+      zoomScale = 1;
+      fullscreenImg.style.transform = '';
+      zoomControls.style.display = 'none';
     });
     
     fullscreenModal.addEventListener('click', function(e) {
       if (e.target === fullscreenModal) {
         fullscreenModal.classList.remove('active');
         fullscreenVideo.pause();
+        zoomScale = 1;
+        fullscreenImg.style.transform = '';
+        zoomControls.style.display = 'none';
       }
     });
     
