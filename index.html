@@ -14,9 +14,14 @@
     h2{font-size:18px;color:#b9c8ff;margin:0 0 12px}
     a{color:#9bb7ff}
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    /* Make columns span the full main container width (left edge of header content to the right of cat_passport) */
     .col6{grid-column:span 6}
-    .col12{grid-column:span 12}
+    .col4{grid-column:span 4}
+    .col12{grid-column:1 / -1}
+    .col16{grid-column:1 / -1}
     @media (max-width:800px){.col6{grid-column:span 12}}
+    @media (max-width:800px){.col4{grid-column:span 16}}
+    @media (max-width:800px){.col16{grid-column:span 16}}
     .muted{color:#b8c4e6}
     footer{max-width:980px;margin:auto;padding:20px;color:#91a2d6}
     ul{margin:10px 0 0 18px}
@@ -40,6 +45,22 @@
     .zoom-controls { position: absolute; right: 30px; bottom: 30px; display: none; gap: 10px; z-index: 1001; }
     .zoom-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #ffffff; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 18px; }
     .zoom-btn:hover { background: rgba(255,255,255,0.12); }
+    /* Software skill bars */
+    .skill { margin-bottom: 14px; }
+    .skill-name { display:flex; justify-content:space-between; align-items:center; font-size:14px; color:#b9c8ff; margin-bottom:6px; }
+    .skill-bar { background:#0b1728; border:1px solid rgba(155,183,255,0.06); border-radius:8px; height:12px; overflow:hidden; }
+    .skill-fill { height:100%; background:linear-gradient(90deg,#6ea8ff,#2b8cff); border-radius:8px 0 0 8px; }
+    /* Align skill list bullets with the Skills heading */
+    .skill-list { margin:10px 0 0 0; padding-left:0; list-style-position:inside; }
+    /* About + Education layout */
+    .about-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+    .education{background:transparent;margin:0;padding:0}
+    .about-grid h2{margin-top:0}
+    .about-grid > aside{background:transparent;border:none;padding:0}
+    .edu-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed rgba(155,183,255,0.04)}
+    .edu-info{color:#b8c4e6}
+    .edu-year{color:#91a2d6;white-space:nowrap;text-align:right}
+    @media (max-width:800px){.about-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -66,33 +87,129 @@
     <section class="card col12">
       <h2>About</h2>
       <p class="muted">
-        I’m a BIM Modeler focused on clean Revit models, coordinated MEP layouts, and automation using Dynamo.
-        I enjoy building repeatable workflows that save time and reduce coordination issues.
+        Passionate about integrating engineering and technology, 
+        I focus on applying BIM to improve the design and coordination 
+        of Mechanical & Electrical systems. With a solid foundation in 
+        technical drafting and 3D modeling, I develop efficient, 
+        clash-free M&E solutions through structured, data-driven workflows. 
+        As a BIM Modeler, I aim to deliver precise, coordinated, and high-performance engineering models.
       </p>
+    </section>
+
+    <section class="card col12">
+      <h2>Education</h2>
+      <div class="edu-item">
+        <div class="edu-info">
+          <div>Diploma in Mechanical Design Engineering Technology</div>
+          <div>Kolej Kemahiran Tinggi MARA Pasir Mas</div>
+        </div>
+        <div class="edu-year">2018 - 2020</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-info">
+          <div>Certificate in Mechanical Engineering Technology</div>
+          <div>Institut Kemahiran MARA Lumut</div>
+        </div>
+        <div class="edu-year">2016 - 2017</div>
+      </div>
+    </section>
+
+    <section class="card col12">
+      <h2>Work Experience</h2>
+
+      <div class="edu-item">
+        <div class="edu-info">
+          <div>BIM Modeller</div>
+          <div>Duriane Professional Sdn Bhd</div>
+          <ul class="muted" style="margin-top:8px">
+            <li>Collaborate with engineers to coordinate BIM modeling content, model exchanges, quality control, and timely project delivery.</li>
+            <li>Develop detailed design drawings using Revit MEP up to LOD 400, including creating parametric families.</li>
+            <li>Model conduit runs, racks, cable trays, panels, switchgear, equipment, lighting fixtures, HVAC ducting, plumbing, fire protection, and technical piping.</li>
+            <li>Convert 2D designs into 3D Revit models and export Revit models into CAD, DWF, and PDF formats.</li>
+            <li>Generate 2D installation drawings, detailed drawings, sections, schedules, and schematics from 3D models or sketches.</li>
+          </ul>
+        </div>
+        <div class="edu-year">July 2025 – Present</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-info">
+          <div>Senior M&E Drafter / Modeller</div>
+          <div>Duriane Professional Sdn Bhd</div>
+          <ul class="muted" style="margin-top:8px">
+            <li>Prepare construction, tender, and authority submission drawings.</li>
+            <li>Draught electrical building services (e.g., Single Line Diagrams, lighting, small power layout, ELV, lightning protection).</li>
+            <li>Draught mechanical building services (e.g., air conditioning, fire protection, plumbing).</li>
+            <li>Perform basic engineering calculations and tabulations.</li>
+            <li>Collaborate with engineers to coordinate BIM modeling content, model exchanges, quality control, and timely project delivery.</li>
+            <li>Develop detailed design drawings using Revit MEP up to LOD 400, including creating parametric families.</li>
+            <li>Model conduit runs, racks, cable trays, panels, switchgear, equipment, lighting fixtures, HVAC ducting, plumbing, fire protection, and technical piping.</li>
+            <li>Convert 2D designs into 3D Revit models and export Revit models into CAD, DWF, and PDF formats.</li>
+            <li>Generate 2D installation drawings, detailed drawings, sections, schedules, and schematics from 3D models or sketches.</li>
+          </ul>
+        </div>
+        <div class="edu-year">July 2024 – July 2025</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-info">
+          <div>M&amp;E Drafter</div>
+          <div>Duriane Professional Sdn Bhd</div>
+          <ul class="muted" style="margin-top:8px">
+            <li>Prepared and amended 2D and 3D drawings for mechanical, electrical, and plumbing systems using AutoCAD.</li>
+            <li>Updated technical drawings, layouts, and schematics for HVAC, piping, fire protection, electrical conduits, and lighting systems.</li>
+            <li>Ensured compliance with industry standards and project specifications through precise amendments.</li>
+            <li>Managed revisions and updates to drawings based on engineer feedback.</li>
+          </ul>
+        </div>
+        <div class="edu-year">June 2021 – July 2024</div>
+      </div>
     </section>
 
     <section class="card col6">
       <h2>Skills</h2>
-      <ul class="muted">
+      <ul class="muted skill-list">
         <li>Revit modeling</li>
-        <li>Revit families (parametric, shared parameters)</li>
+        <li>Revit families</li>
         <li>Dynamo automation</li>
         <li>Autocad Lisp scripting</li>
+        <li>Technical training & mentoring</li>
       </ul>
     </section>
 
     <section class="card col6">
-      <h2>Tools</h2>
-      <ul class="muted">
-        <li>Revit</li>
-        <li>Dynamo</li>
-        <li>Navisworks / clash workflow (if applicable)</li>
-        <li>AutoCAD / ZWCAD (if applicable)</li>
-      </ul>
+      <h2>Software Skills</h2>
+      <div class="muted">
+        <div class="skill">
+          <div class="skill-name"><span>AutoCAD</span></div>
+          <div class="skill-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" aria-label="AutoCAD proficiency 80%"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill-name"><span>Revit</span></div>
+          <div class="skill-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-label="Revit proficiency 70%"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill-name"><span>Naviswork</span></div>
+          <div class="skill-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-label="Naviswork proficiency 50%"><div class="skill-fill" style="width:50%"></div></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill-name"><span>Solidwork</span></div>
+          <div class="skill-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-label="Solidwork proficiency 50%"><div class="skill-fill" style="width:50%"></div></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill-name"><span>Dynamo</span></div>
+          <div class="skill-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30" aria-label="Dynamo proficiency 30%"><div class="skill-fill" style="width:30%"></div></div>
+        </div>
+      </div>
     </section>
 
     <section class="card col12">
-      <h2>Examples</h2>
+      <h2>Samples</h2>
       <details>
         <summary>Revit families (parametric, shared parameters)</summary>
         <p class="muted">Example notes: Family creation, parameter setup, and usage examples.</p>
@@ -144,8 +261,8 @@
 
     <section class="card col12">
       <h2>Downloads</h2>
-      <p class="muted">Add your CV PDF in the repo and link it here.</p>
-      <p><a href="CV.pdf">Download CV</a></p>
+      <p><a href="Resume.pdf">Resume</a></p>
+      <p><a href="BIM.pdf">BIM Certificate</a></p>
     </section>
 
     <section class="card col12">
